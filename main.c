@@ -1,24 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/* 
- * File:   main.c
- * Author: Georgi
- *
- * Created on 17 Февруари 2016, 09:46
- */
+//17, Exercise 1-6. Verify that the expression qetchar () I= EOFis 0 or 1.
 
 #include <stdio.h>
-#include <stdlib.h>
 
-/*
- * 
- */
-int main(int argc, char** argv) {
-
-    return (EXIT_SUCCESS);
+int main() {
+    int c;
+    
+    while ((c = getchar()) != EOF)
+            printf("%d\n", c);
+    printf("%d - at EOF\n", c);
+    return 0;
 }
+
 
