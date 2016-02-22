@@ -1,21 +1,25 @@
-//20, Exercise 1-9. Write a program to copy its input to its output, replacing each
-//string of one or more blanks by a single blank.
-
+//21, 1-12, Write a program that prints its input one word per line
 #include <stdio.h>
-#define NONBLANK 'a'
-//replacing string of blanks with a single blank
+#define IN 1    // inside a word
+#define OUT 0   // outside a word
 
 int main() {
-    int c, lastc;
+    int c, state;
     
-    lastc = NONBLANK;
-    while ((c = getchar()) != EOF) {
-        if (c == ' ')
-            putchar(c);
-        if (c == ' ')
-            if (lastc != ' ')
+    state = OUT;
+    while ( (c = getchar()) != EOF ) {
+        if (c == ' ' || c == '\n' || c == '\t') {
+            if (state == IN) {
+                putchar('\n');     //finish the word
+                state = OUT;
+            } 
+            else if (state == OUT) {
+                state = IN;         // beginning of word
                 putchar(c);
-        lastc = c;
+            } 
+        }
+        else
+        putchar(c);        
     }
     return 0;
 }
