@@ -15,7 +15,7 @@ int main() {
         if (c == ' ')
             if (lastc != ' ')
                 putchar(c);
-        lastc = 'c';
+        lastc = c;
     }
     return 0;
 }
