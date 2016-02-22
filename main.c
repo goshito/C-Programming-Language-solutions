@@ -1,23 +1,22 @@
-//20, Ex. 1-8 write a program to count blanks, tabs and new lines
+//20, Exercise 1-9. Write a program to copy its input to its output, replacing each
+//string of one or more blanks by a single blank.
 
 #include <stdio.h>
+#define NONBLANK 'a'
+//replacing string of blanks with a single blank
 
 int main() {
-    int c, nt, nb, nl;
+    int c, lastc;
     
-    nb = 0;
-    nt = 0;
-    nl = 0;
-    
+    lastc = NONBLANK;
     while ((c = getchar()) != EOF) {
         if (c == ' ')
-            ++nb;
-        if (c == '\t')
-            ++nt;
-        if (c == '\n')
-            ++nl;
+            putchar(c);
+        if (c == ' ')
+            if (lastc != ' ')
+                putchar(c);
+        lastc = 'c';
     }
-    printf("%d %d %d\n", nb, nt, nl);
     return 0;
 }
 
