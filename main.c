@@ -1,31 +1,57 @@
-//27, Exercise 1-15
+/* 30, 1-16. Revise the main routine of the longest-line program so it will 
+ * correctly print the length of arbitrarily long input lines, and as 
+ * much as possible of the text */
 
 #include <stdio.h>
+#define MAXLINE 1000    // maximum input line size
 
-float celsius(float fahr);
+int get_line(char line[], int maxline);
+void copy(char to[], char from[]);
 
-/* printf Fahrenheit-Celsius table for fahr = 0, 20, ... , 300;
- * floating point version */
-
+// print longest input line
 int main() {
-    float fahr;
-    int lower, upper, step;
-
-    lower = 0;      // lower limit of temperature table
-    upper = 300;    // upper limit
-    step = 20;      // step size
+    int len;                // current line lenght
+    int max;                 // maximum length seen so far
+    char line[MAXLINE];     // current input line
+    char longest[MAXLINE];  // longest line saved here
     
-    fahr = lower;
-    while (fahr <= upper) {
-        printf("%3.0f %6.1f\n", fahr, celsius(fahr));
-        fahr = fahr + step;
+    max = 0;
+    while ((len = get_line(line, MAXLINE)) > 0) {
+        printf("%d, %s", len, line);
+        if (len > max) {
+            max = len;
+            copy(longest, line);
+        }
     }
+    if (max > 0)            // there was a line
+        printf("%s", longest);
     return 0;
 }
 
-// celsius: convert fahr into celsius
-float celsius(float fahr) {
-    return (5.0 / 9.0) * (fahr - 32.0);
+// get)line: read a line into s, return length
+int get_line(char s[], int lim) {
+    int c, i, j;
+    
+    j = 0;
+    for (i = 0; (c = getchar()) != EOF && c != '\n'; ++i)
+        if (i < lim-2) {
+            s[j] = c;       // line still in boundaries
+            ++j;
+        }
+    if (c == '\n') {
+        s[j] = c;
+        ++j;
+        ++i;
+    }
+    s[j] = '\0';
+    return i;
 }
 
-
+// copy: copy 'from'into 'to'; assume to is big enough
+void copy(char to[], char from[]) {
+    int i;
+    
+    i = 0;
+    while ((to[i] = from[i]) != '\0')
+        ++i;
+}
