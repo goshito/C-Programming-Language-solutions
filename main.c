@@ -1,46 +1,31 @@
-/* 24, 1-14. Write a program to print a histogram of the frequencies of 
- * different characters in its input. */
+//27, Exercise 1-15
+
 #include <stdio.h>
-#include <ctype.h>
 
-#define MAXHIST 15          // max length of histogram
-#define MAXCHAR 128         // max different characters
+float celsius(float fahr);
 
-// printf horizontal histogram freq. of different characters
+/* printf Fahrenheit-Celsius table for fahr = 0, 20, ... , 300;
+ * floating point version */
+
 int main() {
-    int c, i;
-    int len;            // length of each bar
-    int maxvalue;       // maximum value for cc[]
-    int cc[MAXCHAR];    // character counters
+    float fahr;
+    int lower, upper, step;
+
+    lower = 0;      // lower limit of temperature table
+    upper = 300;    // upper limit
+    step = 20;      // step size
     
-    for (i = 0; i < MAXCHAR; ++i)
-        cc[i] = 0;
-    while ((c = getchar()) != EOF)
-        ++cc[c];
-    maxvalue = 0;
-    for (i = 1; i < MAXCHAR; ++i)
-        if (cc[i] > maxvalue)
-            maxvalue = cc[i];
-    
-    for (i = 1; i < MAXCHAR; ++i) {
-        if (isprint(i))
-            printf("%5d - %c - %5d : ", i, i, cc[i]);
-        else
-            printf("%5d -   - %5d : ", i, cc[i]);
-        if (cc[i] > 0) {
-            if ((len = cc[i] * MAXHIST / maxvalue) <= 0)
-                len = 1;
-        } else
-            len = 0;
-        while (len > 0) {
-            putchar('*');
-            --len;
-        }
-        putchar('\n');
+    fahr = lower;
+    while (fahr <= upper) {
+        printf("%3.0f %6.1f\n", fahr, celsius(fahr));
+        fahr = fahr + step;
     }
     return 0;
 }
 
-
+// celsius: convert fahr into celsius
+float celsius(float fahr) {
+    return (5.0 / 9.0) * (fahr - 32.0);
+}
 
 
