@@ -1,62 +1,33 @@
-/* 
- * 31, Exercise 1-19, Write a function reverse(s) that reverses the character
- * string s. Use it to write a program that reverses its input a line at 
- * a time
- */
+/* 34, Ex. 1-20 Write a program detab that replaces tabs in the input with the 
+ * proper number of blanks to space to the next tab stop. Assume a fixed set
+ * of tab stops, say every n columns. Should n be a variable or a symbolic
+ * parameter? */
 
 #include <stdio.h>
-#define MAXLINE 1000        //maximum input line size
 
-int get_line(char line[], int maxline);
-void reverse(char s[]);
+#define TABINC 8   // tab increment size
 
-//reverse input lines, a line at a time
+// replace tabs with the proper number of blanks
 int main() {
-    char line[MAXLINE];     // current input line
+    int c, nb, pos;
     
-    while(get_line(line, MAXLINE) > 0) {
-        reverse(line);
-        printf("%s", line);
-    }
-    return 0;
-}
-
-// reverse: reverse string s
-void reverse(char s[]) {
-    int i, j;
-    char temp;
-    
-    i = 0;
-    while(s[i] != '\0') // find the end of string s
-        ++i;
-    --i;                // back off from '\0'
-    if(s[i] == '\n')
-        --i;            // leave newline in place
-    j = 0;
-    while (j < i) {
-        temp = s[j];
-        s[j] = s[i];    // swap the characters
-        s[i] = temp;
-        --i;
-        --j;
-    }
-}
-
-// getline: read a line into s, return length
-int get_line(char s[], int lim) {
-    int c, i, j;
-    
-    j = 0;
-    for (i = 0; (c = getchar()) != EOF && c != '\n'; ++i)
-        if (i < lim - 2) {
-            s[j] = c;   // line still in boundaries
-            ++j;
+    nb = 0;         // number of blanks necessary
+    pos = 1;        // position of the character in line
+    while ((c = getchar()) != EOF) {
+        if (c == '\t') {        // tab character
+            nb =  TABINC - (pos - 1) % TABINC;
+            while (nb > 0) {
+                putchar(' ');
+                ++pos;
+                --nb;
+            }
+        } else if (c == '\n') { // newline character
+            putchar(c);
+            pos = 1;
+        } else {                // all other characters
+            putchar(c);
+            ++pos;
         }
-    if (c == '\n') {
-        s[j] = c;
-        ++j;
-        ++i;
     }
-    s[j] = '\0';
-    return i;
 }
+ 
